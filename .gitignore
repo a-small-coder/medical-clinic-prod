@@ -1,0 +1,11 @@
+тедмед.mind
+node_modules
+*/node_modules
+/**/node_modules
+medical-clinic
+/#medical-clinic
+medicalClinic
+.idea
+*/medClinic/mainapp-ui/dist
+*/medClinic/mainapp-ui/.cache
+/Env
