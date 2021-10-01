@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'mainapp',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -129,17 +130,34 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'live-static'
+# STATIC_URL = '/static/'
+# STATIC_ROOT = BASE_DIR / 'live-static'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static"),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, "static"),
+# )
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = STATIC_ROOT /'media'
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = STATIC_ROOT /'media'
+
+AWS_ACCESS_KEY_ID = 'AKIA5LXEWGKZOYBV54AF'
+AWS_SECRET_ACCESS_KEY = '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'
+
+AWS_STORAGE_BUCKET_NAME = 'tedmedecommerce'
+AWS_S3_CUSTOM_DOMAIN = 'https://d2gxcff2k0vswe.cloudfront.net'
+
+AWS_LOCATION = 'static'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+DEFAULT_FILE_STORAGE = 'medClinic.storage_backend.MediaStorage'
+
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
