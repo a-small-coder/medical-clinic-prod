@@ -9,3 +9,5 @@ medicalClinic
 */medClinic/mainapp-ui/dist
 */medClinic/mainapp-ui/.cache
 /Env
+amazon.txt
+medClinic/.env

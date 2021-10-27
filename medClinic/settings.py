@@ -15,6 +15,7 @@ from os import environ
 import os
 import django_heroku
 from django.conf import settings
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure--cnz1+et#q%pr@)fo1q7nk0t&p7+z*2+kf4&600!)7&8l-$#3g')
+# SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure--cnz1+et#q%pr@)fo1q7nk0t&p7+z*2+kf4&600!)7&8l-$#3g')
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -45,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'mainapp',
+    'core',
     'storages',
 ]
 
@@ -142,18 +145,19 @@ USE_TZ = True
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = STATIC_ROOT /'media'
 
-AWS_ACCESS_KEY_ID = 'AKIA5LXEWGKZOYBV54AF'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 
-AWS_STORAGE_BUCKET_NAME = 'tedmedecommerce'
-AWS_S3_CUSTOM_DOMAIN = 'https://d2gxcff2k0vswe.cloudfront.net'
-
+AWS_STORAGE_BUCKET_NAME = 'tedmed-media'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.eu-north-1.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
 AWS_LOCATION = 'static'
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
 DEFAULT_FILE_STORAGE = 'medClinic.storage_backend.MediaStorage'
 
-STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),

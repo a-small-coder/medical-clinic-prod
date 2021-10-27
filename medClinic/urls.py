@@ -16,13 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from mainapp.views import index
+from core.views import home
 # from django.conf import settings
 # from django.conf.urls.static import static
 from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index),
+    path('', home),
     path('api/', include('mainapp.api.urls')),
     path('auth/', obtain_auth_token),
 ]
